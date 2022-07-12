@@ -1,4 +1,4 @@
-import { wrapperNextPage } from 'next-suspense/esm'
+import { wrapperNextPage } from 'next-suspense'
 
 export const wrapper: typeof wrapperNextPage = (NextPage, options) =>
   wrapperNextPage(NextPage, {

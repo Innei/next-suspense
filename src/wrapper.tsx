@@ -43,6 +43,7 @@ export function wrapperNextPage<P extends {}>(
 
     useEffect(() => {
       if (!NextPage.getInitialProps) {
+        useServerPropsOnce = true
         setLoading(false)
         return
       }
