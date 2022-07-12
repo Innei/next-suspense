@@ -10,6 +10,11 @@ const IndexPage: NextPage = () => {
       <Link href={'/with-request'}>
         <a>Go to with-request page</a>
       </Link>
+      <br />
+
+      <Link href={'/with-request-error'}>
+        <a>Go to with-request-error page</a>
+      </Link>
     </div>
   )
 }

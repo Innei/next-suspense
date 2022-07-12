@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import React from 'react'
 import { sleep } from 'utils'
 import { wrapper } from 'utils/wrapper'
@@ -8,9 +9,21 @@ const IndexPage: NextPage<{
 }> = (props) => {
   return (
     <div>
-      <p>Hello Next.js</p>
+      <p>With Fetching data</p>
 
-      <p>{props.bio}</p>
+      <p>Fetched Data:</p>
+      <pre>{JSON.stringify(props.bio, null, 2)}</pre>
+
+      <br />
+
+      <Link href={'/with-request'}>
+        <a>Go to with-request page</a>
+      </Link>
+      <br />
+
+      <Link href={'/with-request-error'}>
+        <a>Go to with-request-error page</a>
+      </Link>
     </div>
   )
 }
