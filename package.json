@@ -36,6 +36,7 @@
     "publish": true
   },
   "scripts": {
+    "prepare": "npm run package",
     "prebuild": "rm -rf lib && rm -rf esm",
     "build": "tsc --build ./src/tsconfig.build.json && tsc --build src/tsconfig.cjs.json",
     "postbuild": "tsc-alias -p src/tsconfig.build.json && tsc-alias -p src/tsconfig.cjs.json && npm run types",
