@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "next dev"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "next": "^12.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "next-suspense": "workspace:*",
+    "qier-progress": "^1.0.4"
+  }
+}

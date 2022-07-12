@@ -1,0 +1,6 @@
+{
+  "name": "noop",
+  "devDependencies": {
+    "@types/react": "^18.0.15"
+  }
+}
