@@ -42,7 +42,8 @@
     "types": "rm -rf types && tsc --build src/tsconfig.types.json && tsc-alias -p src/tsconfig.types.json",
     "package": "NODE_ENV=production npm run build && rollup -c",
     "prepackage": "rm -rf build",
-    "dev": "cd example && pnpm run dev"
+    "dev": "cd example && pnpm run dev",
+    "build:next": "cd example && pnpm run build"
   },
   "peerDependencies": {
     "next": ">=10"
