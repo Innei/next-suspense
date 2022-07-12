@@ -1,105 +1,73 @@
-# Rollup Typescript library template
+# Next Suspense
 
-Please use pnpm do this.
+A suspense wrapper for NextJS when change router and fetching data in CSR.
 
-```sh
-pnpm i
-```
+## Movement
 
-# Usage
+As we know, Next will fetching data in router change, and waiting for request finished then render the next page.
 
-### Package
-
-Bundle your source code via tsc, rollup.
+We hope only use blocked fetch data (aka. `getInitialProps`) for first screen of my app because of SSR. And when changing pages (in CSR), it can work as a SPA that will responsive user interactive immediately.
 
 ```
-npm run package
+CSR: Page A == router change ==> Render Loading Component ==> router done
+                               at the same time
+                             ==> Fetch data  ==> Render Page B
 ```
 
-### Dev
+When the Next Router change, and next page has `getInitialProps` method that needed to called. We suspenses it, and render Loading Component immediately and fetching data at the same time. After fetching data successfully, then render Page B.
 
-Start dev mode by Vite.
-
-```
-npm run dev
-```
-
-### Delopy
-
-Delopy example to GitHub Pages.
+## Install
 
 ```
-npm run delopy
-npm run publish
+npm i next-suspense
 ```
 
-# Additional
+## Usage
 
-## Babel & React
+```tsx
+// utils/wrapper.tsx
+import { wrapperNextPage } from 'next-suspense/esm'
 
-If you want to bundle React JSX with rollup. Add additional packages.
+export const wrapper: typeof wrapperNextPage = (NextPage, options) =>
+  wrapperNextPage(NextPage, {
+    ErrorComponent: (props) => <div>Error: {JSON.stringify(props.error)}</div>,
+    LoadingComponent: () => <div>Loading...</div>,
+    ...options,
+  })
 
-```
-pnpm i -D @babel/preset-react @babel/core @rollup/plugin-babel
-```
+// pages/with-request.tsx
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import React from 'react'
+import { sleep } from 'utils'
+import { wrapper } from 'utils/wrapper'
 
-And, un-comment this in `.babelrc`.
+const IndexPage: NextPage<{
+  bio: string
+}> = (props) => {
+  return (
+    <div>
+      <p>With Fetching data</p>
 
-```json
-{
-  "presets": ["@babel/preset-react"]
+      <p>Fetched Data:</p>
+      <pre>{JSON.stringify(props.bio, null, 2)}</pre>
+
+      <br />
+    </div>
+  )
 }
-```
 
-Un-comment this in `rollup.config.js`
-
-```js
-import { babel } from '@rollup/plugin-babel'
-
-// ...
-
-plugins: [
-    // ...
-   babel({}),
-  ],
-//...
-```
-
-## PostCSS & CSS Module
-
-Create `postcss.config.js` in root folder, copy follow content.
-
-```js
-module.exports = {
-  plugins: {
-    'postcss-preset-env': {
-      autoprefixer: {
-        flexbox: 'no-2009',
-      },
-      stage: 3,
-      features: {
-        'custom-properties': false,
-        'nesting-rules': false,
-      },
-    },
-  },
+IndexPage.getInitialProps = async () => {
+  await sleep(1000)
+  return {
+    bio: 'bio from fetched request',
+  }
 }
+
+export default wrapper(IndexPage)
+
 ```
 
-And, install dependencies.
+## License
 
-```bash
-pnpm i postcss postcss-preset-env rollup-plugin-postcss -D
-```
-
-Then, add rollup plugin.
-
-```js
-// rollup.config.js
-import postcss from 'rollup-plugin-postcss'
-
-// plugins: [
-
-postcss({})
-// ],
-```
+MIT. Innei, Coding with love.
