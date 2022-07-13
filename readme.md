@@ -2,7 +2,7 @@
 
 A suspense wrapper for NextJS when change router and fetching data in CSR.
 
-## Movement
+## Motivation
 
 As we know, Next will fetching data in router change, and waiting for request finished then render the next page.
 
