@@ -19,16 +19,24 @@ export type WrapperOptions = {
   ErrorComponent?: (props: { error?: any }) => JSX.Element | null
   LoadingComponent?: () => JSX.Element | null
 }
-// only use once getInitialProps result from server fetch, because it will be reset after each fetch and fetch in csr.
-let useServerPropsOnce = false
+
 export function wrapperNextPage<P extends {}>(
   NextPage: NextPage<P>,
   options: WrapperOptions = {},
 ) {
   if (!isClientSide()) {
+    const originalGetInitialProps = NextPage.getInitialProps
+    if (originalGetInitialProps) {
+      NextPage.getInitialProps = async (ctx: NextPageContext) => {
+        return {
+          ...(await originalGetInitialProps(ctx)),
+          __$$path: ctx.asPath,
+        }
+      }
+    }
+
     return NextPage
   }
-
   const { LoadingComponent = Noop, ErrorComponent = Noop } =
     options as Required<WrapperOptions>
 
@@ -38,19 +46,20 @@ export function wrapperNextPage<P extends {}>(
       NextPage.getInitialProps ? true : false,
     )
 
-    const [dataProps, setProps] = useState(!useServerPropsOnce ? props : null)
+    const [dataProps, setProps] = useState<any>(null)
     const [error, setError] = useState<any>(null)
 
     useEffect(() => {
       if (!NextPage.getInitialProps) {
-        useServerPropsOnce = true
         setLoading(false)
+        setProps(null)
+
         return
       }
 
-      if (!useServerPropsOnce) {
-        useServerPropsOnce = true
+      if (props.__$$path === router.asPath) {
         setLoading(false)
+        setProps(props)
         return
       }
 
