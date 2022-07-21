@@ -1,6 +1,6 @@
 {
   "name": "next-suspense",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A suspense wrapper for NextJS when change router and fetching data in CSR.",
   "author": "Innei",
   "license": "MIT",
