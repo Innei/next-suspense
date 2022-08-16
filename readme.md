@@ -1,25 +1,30 @@
 # Next Suspense
 
-A suspense wrapper for NextJS when change router and fetching data in CSR.
+A suspense wrapper for NextJS to use when the route changes and data is being fetched in CSR.
 
 ## Motivation
 
-As we know, Next will fetching data in router change, and waiting for request finished then render the next page.
+As we know, in NextJS it's possible to fetch data when the route changes, to then wait for the finished request before rendering the page.
 
-We hope only use blocked fetch data (aka. `getInitialProps`) for first screen of my app because of SSR. And when changing pages (in CSR), it can work as a SPA that will responsive user interactive immediately.
+The goal of this library is to use SSR (with `getInitialProps`) to fetch the initial data needed in the first loaded screen, and use CSR (client-side rendering) when changing routes afterwards, so that the user interface responds immediately and shows a Loading-component until the data needed is fetched.
 
 ```
-CSR: Page A == router change ==> Render Loading Component ==> router done
-                               at the same time
-                             ==> Fetch data  ==> Render Page B
+                               ,--> render loading component  ->  ,---> rerender when data fetched
+                              /                                  /
+Initial page -> route changes            (in meanwhile)         /
+(CSR)                         \                                /
+                               `-------->   fetch data   -----´
 ```
-
-When the Next Router change, and next page has `getInitialProps` method that needed to called. We suspenses it, and render Loading Component immediately and fetching data at the same time. After fetching data successfully, then render Page B.
+When the Next-router navigates towards another route and the Next-page has a `getInitialProps`-method, we use a Suspense-mechanism to immediately render a loading-component as a fallback, while data is being fetched on the background. When the fetching has completed, the loading-component is swapped out by the requested page in a rerender.
 
 ## Install
 
 ```
 npm i next-suspense
+```
+or
+```
+yarn add next-suspense
 ```
 
 ## Usage
