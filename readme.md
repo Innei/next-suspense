@@ -1,6 +1,6 @@
 # Next Suspense
 
-A suspense wrapper for NextJS to use when the route changes and data is being fetched in CSR.
+A suspense wrapper for NextJS to use when the route changes and data is being fetched with CSR.
 
 ## Motivation
 
