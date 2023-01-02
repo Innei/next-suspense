@@ -8,13 +8,14 @@ As we know, Next will fetching data in router change, and waiting for request fi
 
 We hope only use blocked fetch data (aka. `getInitialProps`) for first screen of my app because of SSR. And when changing pages (in CSR), it can work as a SPA that will responsive user interactive immediately.
 
-```
-CSR: Page A == router change ==> Render Loading Component ==> router done
-                               at the same time
-                             ==> Fetch data  ==> Render Page B
-```
+![image](https://user-images.githubusercontent.com/41265413/210218632-31a542b3-2639-477b-88ec-ad83db32af5f.png)
+
 
 When the Next Router change, and next page has `getInitialProps` method that needed to called. We suspenses it, and render Loading Component immediately and fetching data at the same time. After fetching data successfully, then render Page B.
+
+## Requirement
+
+- NextJS 12 (or 13 disabled app dir)
 
 ## Install
 
@@ -35,7 +36,7 @@ export const wrapper: typeof wrapperNextPage = (NextPage, options) =>
     ...options,
   })
 
-// pages/with-request.tsx
+// pages/home.tsx
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import React from 'react'
@@ -70,4 +71,6 @@ export default wrapper(IndexPage)
 
 ## License
 
-MIT. Innei, Coding with love.
+2022 © Innei, Released under the MIT License.
+
+> [Personal Website](https://innei.ren/) · GitHub [@Innei](https://github.com/innei/)
