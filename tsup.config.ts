@@ -5,6 +5,12 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  format: ['cjs', 'esm'],
+  format: ['esm', 'cjs'],
+
   external: ['react', 'react-dom', 'next'],
+  outExtension({ format }) {
+    return {
+      js: format === 'cjs' ? `.js` : `.${format}.js`,
+    }
+  },
 })
