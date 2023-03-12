@@ -52,6 +52,9 @@
   "peerDependencies": {
     "next": ">=10"
   },
+  "dependencies": {
+    "next": ">=10"
+  },
   "devDependencies": {
     "@innei/eslint-config-react-ts": "latest",
     "@innei/eslint-config-ts": "latest",
