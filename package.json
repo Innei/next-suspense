@@ -1,17 +1,16 @@
 {
   "name": "next-suspense",
   "version": "0.2.1",
-  "type": "module",
   "description": "A suspense wrapper for NextJS when change router and fetching data in CSR.",
   "author": "Innei",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
   },
   "files": [
